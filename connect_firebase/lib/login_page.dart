@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_flutter_app/profile_page.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      print(googleUser);
 
       if (googleUser == null) {
         // User canceled the sign-in
@@ -98,10 +101,9 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () async {
                     User? user = await signInWithGoogle();
                     if (user != null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Signed in as ${user.displayName}'),
-                        ),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ProfilePage()),
                       );
                     }
                   },
@@ -160,3 +162,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+
+
